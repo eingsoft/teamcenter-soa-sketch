@@ -31,7 +31,7 @@ public class TcSOAServiceTest {
     System.setProperty("tc.host", "plmwebtest");
     System.setProperty("tc.port", "7001");
     System.setProperty("tc.appName", "tc");
-    SOAExecutionContext.current().init("king", "king");
+    SOAExecutionContext.current().initWithoutPool("king", "king");
   }
 
   @After

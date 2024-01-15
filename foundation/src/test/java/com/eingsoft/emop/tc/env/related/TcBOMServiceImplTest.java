@@ -50,7 +50,7 @@ public class TcBOMServiceImplTest implements TcContextHolderAware {
   public void setup() {
     System.setProperty("traceSoaUsage", "true");
     ConnectionBuilderFactory.setProperties("10.16.4.138", 7001);
-    SOAExecutionContext.current().init(username, password);
+    SOAExecutionContext.current().initWithoutPool(username, password);
     bomService = new TcBOMServiceImpl(getTcContextHolder());
   }
 

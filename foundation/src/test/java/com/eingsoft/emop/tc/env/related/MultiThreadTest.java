@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
+
+import com.eingsoft.emop.tc.model.ModelObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -18,12 +20,14 @@ public class MultiThreadTest {
 
   @Before
   public void setup() {
-    ConnectionBuilderFactory.setProperties("192.168.1.124", 7001);
+    ConnectionBuilderFactory.setProperties("172.17.253.115", 7001);
+    System.setProperty("tc.username", "infodba");
+    System.setProperty("tc.password", "infodba");
   }
 
   @Test
   public void testMultiThreadSupport() {
-    SOAExecutionContext.current().init("king", "king");
+    SOAExecutionContext.current().init();
     List<String> uids = Arrays.asList("wRT5Q19BpMNbrA", "QLY1vOEQpMNbrA", "A3W1vOEQpMNbrA", "AHc1vOEQpMNbrA");
     try {
       final SOAExecutionContext ctx = SOAExecutionContext.current();
@@ -48,7 +52,8 @@ public class MultiThreadTest {
 
     @Override
     public String call() throws Exception {
-      return SOAExecutionContext.current().getTcContextHolder().getTcLoadService().loadObjectWithProperties(uid).getObjectName();
+      ModelObject modelObject = SOAExecutionContext.current().getTcContextHolder().getTcLoadService().loadObjectWithProperties(uid);
+      return modelObject == null ? null : modelObject.getObjectName();
     }
 
   }

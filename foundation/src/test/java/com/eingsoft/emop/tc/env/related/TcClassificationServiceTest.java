@@ -21,7 +21,7 @@ public class TcClassificationServiceTest {
         System.setProperty("tc.host", "192.168.1.24");
         System.setProperty("tc.port", "7001");
         System.setProperty("tc.appName", "tc");
-        SOAExecutionContext.current().init("test004", "1");
+        SOAExecutionContext.current().initWithoutPool("test004", "1");
     }
 
     @After

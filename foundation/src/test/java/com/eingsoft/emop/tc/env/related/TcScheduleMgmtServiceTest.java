@@ -24,7 +24,7 @@ public class TcScheduleMgmtServiceTest {
     System.setProperty("tc.appName", "tc");
     System.setProperty("tc.username", "king");
     System.setProperty("tc.password", "king");
-    SOAExecutionContext.current().init("king", "king");
+    SOAExecutionContext.current().initWithoutPool("king", "king");
   }
 
   @After

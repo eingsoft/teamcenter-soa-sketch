@@ -24,7 +24,7 @@ public class TcIRMServiceTest {
         System.setProperty("tc.host", "120.78.87.76");
         System.setProperty("tc.port", "7001");
         System.setProperty("tc.appName", "tc");
-        SOAExecutionContext.current().init("zhicheng", "zhicheng");
+        SOAExecutionContext.current().initWithoutPool("zhicheng", "zhicheng");
     }
 
     @After

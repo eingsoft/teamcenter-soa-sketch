@@ -29,7 +29,7 @@ public class TcBOMServiceTest {
         System.setProperty("tc.username", "king");
         System.setProperty("tc.password", "king");
         System.setProperty("tc.pooled", "false");
-        SOAExecutionContext.current().init("king", "king");
+        SOAExecutionContext.current().initWithoutPool("king", "king");
     }
 
     @After

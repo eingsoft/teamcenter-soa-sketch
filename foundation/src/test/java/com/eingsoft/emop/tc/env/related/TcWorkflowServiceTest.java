@@ -24,7 +24,7 @@ public class TcWorkflowServiceTest {
     System.setProperty("tc.appName", "tc");
     System.setProperty("tc.username", "zhicheng");
     System.setProperty("tc.password", "1");
-    SOAExecutionContext.current().init("king", "king");
+    SOAExecutionContext.current().initWithoutPool("king", "king");
   }
 
   @After

@@ -25,7 +25,7 @@ public class TcProjectServiceTest {
         System.setProperty("tc.host", "172.17.95.160");
         System.setProperty("tc.port", "7001");
         System.setProperty("tc.appName", "tc");
-        SOAExecutionContext.current().init("king", "king");
+        SOAExecutionContext.current().initWithoutPool("king", "king");
     }
 
     @After

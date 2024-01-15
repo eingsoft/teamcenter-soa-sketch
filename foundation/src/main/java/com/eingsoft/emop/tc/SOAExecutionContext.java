@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import static com.eingsoft.emop.tc.connection.ConnectionBuilderFactory.POOLED;
+import static com.eingsoft.emop.tc.connection.ConnectionBuilderFactory.USERNAME;
 import static com.eingsoft.emop.tc.propertyresolver.PropertyResolver.getPropertyResolver;
 
 @Log4j2
@@ -158,9 +159,12 @@ public class SOAExecutionContext implements Serializable, CredentialTcContextHol
     }
 
     @SneakyThrows
-    public void init(@NonNull String username, @NonNull String password) {
-        CredentialTcContextHolder ctxHoder = getPropertyResolver().getBooleanProperty(POOLED, true) ? TcSessionPool.getInstance().borrowObject(20 * 1000) : createCredentialContextHolder(username, password);
-        this.init(username, ctxHoder);
+    public void init() {
+        if(!getPropertyResolver().getBooleanProperty(POOLED, true)){
+            throw new RuntimeException("pool is not enabled, please init the context manually with other init method.");
+        }
+        TcContextHolder tcContextHolder = TcSessionPool.getInstance().borrowObject(20 * 1000);
+        this.init(PropertyResolver.getPropertyResolver().getProperty(USERNAME), tcContextHolder);
     }
 
     public void init(@NonNull String username, @NonNull TcContextHolder tcContextHolder) {
@@ -189,10 +193,10 @@ public class SOAExecutionContext implements Serializable, CredentialTcContextHol
         if (tcContextHolder != null) {
             tcContextHolder.getTcBOMService().closeAllBOMWindowSiliently();
             tcContextHolder.getTcBOPService().closeAllBOPLinesSiliently();
-            if (tcContextHolder instanceof CredentialTcContextHolder && PropertyResolver.getPropertyResolver().getBooleanProperty(POOLED, true)) {
-                TcSessionPool.getInstance().returnObject((CredentialTcContextHolder) tcContextHolder);
-            }
             if (forceLogout && tcContextHolder instanceof CredentialTcContextHolder) {
+                if (tcContextHolder instanceof CredentialTcContextHolder && PropertyResolver.getPropertyResolver().getBooleanProperty(POOLED, true)) {
+                    TcSessionPool.getInstance().returnObject((CredentialTcContextHolder) tcContextHolder);
+                }
                 if (((CredentialTcContextHolder) tcContextHolder).isEphemeral() && tcContextHolder.isSessionCreated()) {
                     try {
                         if (!PropertyResolver.getPropertyResolver().getBooleanProperty(POOLED, true)) {

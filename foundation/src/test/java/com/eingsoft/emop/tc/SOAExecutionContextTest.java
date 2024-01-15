@@ -80,8 +80,8 @@ public class SOAExecutionContextTest implements TcContextHolderAware {
     }
 
     public void testDifferentSOAExecutionContextCanOnlyBeInitializedOnce2() {
-        SOAExecutionContext.current().init("infodba", "infodba");
-        SOAExecutionContext.current().init("infodba", "infodba2");
+        SOAExecutionContext.current().initWithoutPool("infodba", "infodba");
+        SOAExecutionContext.current().initWithoutPool("infodba", "infodba2");
     }
     
     @Test

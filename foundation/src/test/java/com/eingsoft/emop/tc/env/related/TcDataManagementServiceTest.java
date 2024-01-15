@@ -50,7 +50,7 @@ public class TcDataManagementServiceTest {
     System.setProperty("tc.port", "7001");
     System.setProperty("tc.appName", "tc");
     System.setProperty("tc.pooled","false");
-    SOAExecutionContext.current().init("king", "king");
+    SOAExecutionContext.current().initWithoutPool("king", "king");
   }
 
   @After
